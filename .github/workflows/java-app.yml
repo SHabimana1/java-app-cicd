@@ -23,7 +23,7 @@ env:
 
 jobs:
 
-  sonar:
+  scan_with_sonarQube:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
