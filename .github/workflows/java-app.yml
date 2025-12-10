@@ -177,7 +177,7 @@ jobs:
 
           format: table  # can also use 'json' or 'sarif'
 
-          exit-code: 1   # fail job if vulnerabilities are found
+          exit-code: 1   # fail job if vulnerabilities are found.
 
           severity: CRITICAL,HIGH  # only report high/critical issues    
 
