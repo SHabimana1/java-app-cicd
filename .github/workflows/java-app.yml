@@ -148,7 +148,7 @@ jobs:
        - name: Configure AWS Credential
          uses: aws-actions/configure-aws-credentials@v4
          with:
-           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+           role-to-assume: ${{ secrets.ECR_ACCESS_ROLE }}
            aws-region: ${{ secrets.AWS_REGION }}
 
        # Download the JAR file artifact from the build job
@@ -164,7 +164,7 @@ jobs:
 
        - name: Build Docker image
          run: |
-           docker build -t utc_app:${{ github.sha }} .
+           docker build -t utc-app:${{ github.sha }} .
 
        
        - name: Scan Docker image with Trivy
@@ -173,7 +173,7 @@ jobs:
 
          with:
 
-          image-ref: utc_app:${{ github.sha }}
+          image-ref: utc-app:${{ github.sha }}
 
           format: table  # can also use 'json' or 'sarif'
 
@@ -186,8 +186,8 @@ jobs:
            APP_VERSION=grep -m2 '<version>' pom.xml | tail -1 | grep -oP '(?<=>).*(?=<)'
            echo $APP_VERSION
 
-           docker tag utc_app:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/utc_app:${{ github.sha }}
-           docker tag utc_app:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/utc_app:$APP_VERSION
+           docker tag utc-app:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/utc-app:${{ github.sha }}
+           docker tag utc-app:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/utc-app:$APP_VERSION
 
        - name: Push Docker image to ECR
          run: |
